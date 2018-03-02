@@ -59,7 +59,9 @@ We use OpenCV to manipulate images and features. If you use a ROS version older 
 We use a modified version of g2o (see original at https://github.com/RainerKuemmerle/g2o) to perform optimizations.
 In order to compile g2o you will need to have installed Eigen3 (at least 3.1.0).
 	
-	sudo apt-get install libeigen3-dev
+UPDATE: For ubuntu 16.04 xenial, install this version of eigen instead of the current eigen version. Just follow this post :
+
+	https://stackoverflow.com/questions/38647114/orb-slam-installation-on-ubuntu-xenial-16-04
 
 ##2.5 DBoW2 (included in Thirdparty)
 We make use of some components of the DBoW2 and DLib library (see original at https://github.com/dorian3d/DBoW2) for place recognition and feature matching. There are no additional dependencies to compile DBoW2.
