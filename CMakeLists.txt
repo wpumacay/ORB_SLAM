@@ -47,10 +47,10 @@ src/Initializer.cc
 rosbuild_add_boost_directories()
 rosbuild_link_boost(${PROJECT_NAME} thread)
 
-target_link_libraries(${PROJECT_NAME}
-${OpenCV_LIBS}
-${EIGEN3_LIBS}
-${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2.so
-${PROJECT_SOURCE_DIR}/Thirdparty/g2o/lib/libg2o.so
-)
+target_link_libraries(  ${PROJECT_NAME}
+						${OpenCV_LIBS}
+						${EIGEN3_LIBS}
+						${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2.so
+						${PROJECT_SOURCE_DIR}/Thirdparty/g2o/lib/libg2o.so
+						boost_system )
 
