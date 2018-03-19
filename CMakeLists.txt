@@ -54,3 +54,7 @@ target_link_libraries(  ${PROJECT_NAME}
 						${PROJECT_SOURCE_DIR}/Thirdparty/g2o/lib/libg2o.so
 						boost_system )
 
+rosbuild_add_executable( "${PROJECT_NAME}_videoStreamer"
+                         src/VideoStreamer.cc )
+target_link_libraries( "${PROJECT_NAME}_videoStreamer"
+                       ${OpenCV_LIBS} )
