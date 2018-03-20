@@ -14,17 +14,17 @@ int main( int argc, char** argv )
     ros::NodeHandle _nh;
 
     image_transport::ImageTransport _it( _nh );
-    image_transport::Publisher _pub = _it.advertise( "camera/image", 1 );
+    image_transport::Publisher _pub = _it.advertise( "camera/image_raw", 1 );
 
     cv::VideoCapture _capture( "../res/vid.avi" );
 
     if ( !_capture.isOpened() )
     {
         std::cout << "error opening video file" << std::endl;
-        return -1;
-    }
+        return -1
+;    }
 
-    ros::Rate _loopRate(5);
+    ros::Rate _loopRate( 30 );
 
     while ( _nh.ok() )
     {
