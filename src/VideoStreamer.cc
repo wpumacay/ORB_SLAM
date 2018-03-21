@@ -21,8 +21,8 @@ int main( int argc, char** argv )
     if ( !_capture.isOpened() )
     {
         std::cout << "error opening video file" << std::endl;
-        return -1
-;    }
+        return -1;
+    }
 
     ros::Rate _loopRate( 30 );
 

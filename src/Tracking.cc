@@ -62,11 +62,12 @@ Tracking::Tracking(ORBVocabulary* pVoc, FramePublisher *pFramePublisher, MapPubl
     K.at<float>(1,2) = cy;
     K.copyTo(mK);
 
-    cv::Mat DistCoef(4,1,CV_32F);
+    cv::Mat DistCoef(5,1,CV_32F);
     DistCoef.at<float>(0) = fSettings["Camera.k1"];
     DistCoef.at<float>(1) = fSettings["Camera.k2"];
     DistCoef.at<float>(2) = fSettings["Camera.p1"];
     DistCoef.at<float>(3) = fSettings["Camera.p2"];
+    DistCoef.at<float>(4) = fSettings["Camera.k3"];
     DistCoef.copyTo(mDistCoef);
 
     float fps = fSettings["Camera.fps"];
