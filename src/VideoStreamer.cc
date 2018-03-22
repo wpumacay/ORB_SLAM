@@ -16,11 +16,11 @@ int main( int argc, char** argv )
     image_transport::ImageTransport _it( _nh );
     image_transport::Publisher _pub = _it.advertise( "camera/image_raw", 1 );
 
-    cv::VideoCapture _capture( "../res/vid.avi" );
+    cv::VideoCapture _capture( 1 );
 
     if ( !_capture.isOpened() )
     {
-        std::cout << "error opening video file" << std::endl;
+        std::cout << "error opening camera" << std::endl;
         return -1;
     }
 

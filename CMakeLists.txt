@@ -14,6 +14,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall  -O3 -march=native")
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
+add_definitions( -DRESOURCES_PATH="${CMAKE_SOURCE_DIR}/res/" )
+
 LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
 
 find_package(OpenCV REQUIRED)
@@ -58,3 +60,8 @@ rosbuild_add_executable( "${PROJECT_NAME}_videoStreamer"
                          src/VideoStreamer.cc )
 target_link_libraries( "${PROJECT_NAME}_videoStreamer"
                        ${OpenCV_LIBS} )
+
+
+# # Add tools building
+# rosbuild_add_executable( "${PROJECT_NAME}_groundTruthPoses"
+# 						 src/ )
