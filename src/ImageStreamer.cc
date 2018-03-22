@@ -10,32 +10,50 @@
 #include <sstream>
 #include <fstream>
 
-#define RES_PATH "../res/kitti_data/image_0"
-#define TXT_TUM_PATH "../res/TUM/rgbd_dataset_freiburg3_walking_halsfshpere"
-#define RES_TUM_PATH "../res/TUM/"
+#define KITTI_RES_PATH "../res/kitti/image_0/"
+#define TUM_TXT_PATH "../res/TUM/rgbd_dataset_freiburg3_walking_halfsphere/rgb.txt"
+#define TUM_RES_PATH "../res/TUM/rgbd_dataset_freiburg3_walking_halfsphere/"
 //#define NUM_IMAGES 114
 #define NUM_IMAGES 631
 
+
+std::vector< std::string > split( const std::string& str, const char& c )
+{
+    std::string _buff("");
+    std::vector< std::string > _v;
+    
+    for( int i = 0; i < int(str.size()); i++ )
+    {
+        char n = str[i];
+        if( n != c ) _buff += n; 
+        else if( n == c && _buff != "" ) { _v.push_back( _buff ); _buff = ""; }
+    }
+    if( _buff != "" ) _v.push_back( _buff );
+    
+    return _v;
+}
 
 bool initializeTUMdataset( std::vector< std::string >& imagePaths, std::string txtImagesList )
 {
     std::ifstream _fHandle( txtImagesList.c_str() );
     std::string _line, _path;
+    std::vector< std::string > _words;
 
-    if( !myfile.is_open() )
+    if( !_fHandle.is_open() )
     {
-        cout << "File " << txtImagesList << " cannot be opened\n";
+        std::cout << "File " << txtImagesList << " cannot be opened\n";
 
         return false;
     }
     while( getline( _fHandle, _line ) )
     {
-        if( _linene.substr( 0, _line.find(' ') == "#" ) )
+        _words = split( _line, ' ' );
+        if( _words[0] == "#" )
         {
             continue;
         }
 
-        _path = _line.substr( 1, _line.find(' ') );
+        _path = _words[1];
         imagePaths.push_back( RES_TUM_PATH + _path );
     }
 
@@ -106,7 +124,8 @@ int main( int argc, char** argv )
 
         if ( !_frame.empty() )
         {
-            _imgMsg = cv_bridge::CvImage( std_msgs::Header(), "bgr8", _frame ).toImageMsg();
+            //_imgMsg = cv_bridge::CvImage( std_msgs::Header(), "bgr8", _frame ).toImageMsg();
+            _imgMsg = cv_bridge::CvImage( std_msgs::Header(), "mono8", _frame ).toImageMsg();
             _pub.publish( _imgMsg );
             cv::waitKey( 1 );
         }
