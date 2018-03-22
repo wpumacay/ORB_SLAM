@@ -16,11 +16,11 @@ int main( int argc, char** argv )
     image_transport::ImageTransport _it( _nh );
     image_transport::Publisher _pub = _it.advertise( "camera/image_raw", 1 );
 
-    cv::VideoCapture _capture( 1 );
+    cv::VideoCapture _capture( "../res/vid_lc.webm" );
 
     if ( !_capture.isOpened() )
     {
-        std::cout << "error opening camera" << std::endl;
+        std::cout << "error opening video file" << std::endl;
         return -1;
     }
 
@@ -40,7 +40,7 @@ int main( int argc, char** argv )
             // std::cout << "sent image" << std::endl;
             _imgMsg = cv_bridge::CvImage( std_msgs::Header(), "bgr8", _frame ).toImageMsg();
             _pub.publish( _imgMsg );
-            cv::waitKey( 1 );
+            // cv::waitKey( 1 );
         }
 
         ros::spinOnce();

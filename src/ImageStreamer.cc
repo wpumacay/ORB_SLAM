@@ -4,86 +4,9 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <cv_bridge/cv_bridge.h>
 
-#include <iostream>
-#include <string>
-#include <vector>
-#include <sstream>
-#include <fstream>
+#include <DataSetTUM.h>
 
-#define KITTI_RES_PATH "../res/kitti/image_0/"
-#define TUM_TXT_PATH "../res/TUM/rgbd_dataset_freiburg3_walking_halfsphere/rgb.txt"
-#define TUM_RES_PATH "../res/TUM/rgbd_dataset_freiburg3_walking_halfsphere/"
-//#define NUM_IMAGES 114
-#define NUM_IMAGES 631
-
-
-std::vector< std::string > split( const std::string& str, const char& c )
-{
-    std::string _buff("");
-    std::vector< std::string > _v;
-    
-    for( int i = 0; i < int(str.size()); i++ )
-    {
-        char n = str[i];
-        if( n != c ) _buff += n; 
-        else if( n == c && _buff != "" ) { _v.push_back( _buff ); _buff = ""; }
-    }
-    if( _buff != "" ) _v.push_back( _buff );
-    
-    return _v;
-}
-
-bool initializeTUMdataset( std::vector< std::string >& imagePaths, std::string txtImagesList )
-{
-    std::ifstream _fHandle( txtImagesList.c_str() );
-    std::string _line, _path;
-    std::vector< std::string > _words;
-
-    if( !_fHandle.is_open() )
-    {
-        std::cout << "File " << txtImagesList << " cannot be opened\n";
-
-        return false;
-    }
-    while( getline( _fHandle, _line ) )
-    {
-        _words = split( _line, ' ' );
-        if( _words[0] == "#" )
-        {
-            continue;
-        }
-
-        _path = _words[1];
-        imagePaths.push_back( RES_TUM_PATH + _path );
-    }
-
-    _fHandle.close();
-
-    return true;
-}
-
-std::string getImageName( int indx, int sz )
-{
-    std::stringstream _ss;
-    std::string _stringVal;
-
-    _ss << std::setfill( '0' ) << std::setw( sz ) << indx;
-    _ss >> _stringVal;
-
-    _stringVal = _stringVal + ".png";
-
-    return _stringVal;
-}
-
-bool kittiDatasetLoader( std::vector< std::string >& imagePaths, int numImages )
-{
-    for( int i = 0; i < numImages; i++ )
-    {
-        imagePaths.push_back( RES_PATH + getImageName( i, 6 ) );
-    }
-    return true;
-}
-
+using namespace std;
 
 int main( int argc, char** argv )
 {
@@ -93,41 +16,38 @@ int main( int argc, char** argv )
 
     image_transport::ImageTransport _it( _nh );
     image_transport::Publisher _pub = _it.advertise( "camera/image_raw", 1 );
-    cv::Mat _frame;
 
-    std::vector< std::string > _imagePaths;
-    /*if( !initializeTUMdataset( _imagePaths, TXT_TUM_PATH ) )
-    {
-        return 0;
-    }*/
+    vector< cv::Mat > _frames;
 
-    if( !kittiDatasetLoader( _imagePaths, NUM_IMAGES  ) )
+    string _datasetPath;
+    _datasetPath += RESOURCES_PATH;
+    // _datasetPath += "TUM/rgbd_dataset_freiburg3_walking_halfsphere/";
+    _datasetPath += "TUM/rgbd_dataset_freiburg2_desk/";
+
+    if( !orbslam::dataset::TUM::loadImages( _datasetPath, 
+                                            _frames, 
+                                            false ) )
     {
+        cout << "Couldn't load dataset" << endl;
         return 0;
     }
 
-    ros::Rate _loopRate( 15 );
+    ros::Rate _loopRate( 30 );
     int _index = 0;
-    int _numImages = int( _imagePaths.size() );
-
 
     while ( _nh.ok() )
     {
-        //std::string _imgName = getImageName( _index );
-        std::string _imgName = _imagePaths[ _index ];
-
-        _index = ( _index + 1 ) % _numImages;
-
         sensor_msgs::ImagePtr _imgMsg;
 
-        _frame = cv::imread( _imgName );
+        cv::Mat _frame = _frames[_index];
+
+        _index = ( _index + 1 ) % _frames.size();
 
         if ( !_frame.empty() )
         {
-            //_imgMsg = cv_bridge::CvImage( std_msgs::Header(), "bgr8", _frame ).toImageMsg();
-            _imgMsg = cv_bridge::CvImage( std_msgs::Header(), "mono8", _frame ).toImageMsg();
+            _imgMsg = cv_bridge::CvImage( std_msgs::Header(), "bgr8", _frame ).toImageMsg();
+            //_imgMsg = cv_bridge::CvImage( std_msgs::Header(), "mono8", _frame ).toImageMsg();
             _pub.publish( _imgMsg );
-            cv::waitKey( 1 );
         }
 
         ros::spinOnce();

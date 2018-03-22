@@ -62,6 +62,14 @@ target_link_libraries( "${PROJECT_NAME}_videoStreamer"
                        ${OpenCV_LIBS} )
 
 
+rosbuild_add_executable( "${PROJECT_NAME}_imageStreamer"
+                         src/ImageStreamer.cc
+                         src/Common.cc
+                         src/DataSetTUM.cc )
+target_link_libraries( "${PROJECT_NAME}_imageStreamer"
+                       ${OpenCV_LIBS} )
+
+
 # # Add tools building
 # rosbuild_add_executable( "${PROJECT_NAME}_groundTruthPoses"
 # 						 src/ )

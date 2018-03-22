@@ -3,12 +3,16 @@
 
 #include <vector>
 #include <string>
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
+#include <opencv2/opencv.hpp>
 
 #ifndef RESOURCES_PATH
 	#define RESOURCES_PATH "../res"
 #endif
+
+using namespace std;
 
 namespace orbslam
 {
@@ -20,6 +24,8 @@ namespace orbslam
 	};
 
 
-    vector<string> splitString( const string& txt, char separator = ' ' );
+    void splitString( const string& txt, 
+                      vector<string>& strSplits, 
+                      char separator = ' ' );
 
 }

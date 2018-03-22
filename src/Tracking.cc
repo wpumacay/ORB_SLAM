@@ -161,7 +161,7 @@ void Tracking::SetKeyFrameDatabase(KeyFrameDatabase *pKFDB)
 void Tracking::Run()
 {
     ros::NodeHandle nodeHandler;
-    ros::Subscriber sub = nodeHandler.subscribe("/camera/image_raw", 1, &Tracking::GrabImage, this);
+    ros::Subscriber sub = nodeHandler.subscribe("/camera/rgb/image_color", 1, &Tracking::GrabImage, this);
 
     ros::spin();
 }

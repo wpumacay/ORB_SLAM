@@ -23,7 +23,7 @@
 # Camera.cx: 6.957519e+02
 # Camera.cy: 2.242509e+02
 
-
+# #for TUM dataset
 # Camera.fx: 537.960322
 # Camera.fy: 539.597659
 # Camera.cx: 319.183641
@@ -40,11 +40,23 @@
 # Camera.cx: 6.071928000000e+02
 # Camera.cy: 1.852157000000e+02
 
-# ps3 new camera
-Camera.fx: 4.9919981933877307e+02
-Camera.fy: 4.9633763759988875e+02
-Camera.cx: 3.2254550900312012e+02
-Camera.cy: 2.3880511516801573e+02
+# # ps3 new camera
+# Camera.fx: 4.9919981933877307e+02
+# Camera.fy: 4.9633763759988875e+02
+# Camera.cx: 3.2254550900312012e+02
+# Camera.cy: 2.3880511516801573e+02
+
+# # lifeCam new camera
+# Camera.fx: 627.0314
+# Camera.fy: 631.8021
+# Camera.cx: 342.7495
+# Camera.cy: 231.2469
+
+# TUM fr2 dataset
+Camera.fx: 520.908620
+Camera.fy: 521.007327
+Camera.cx: 325.141442
+Camera.cy: 249.701764
 
 # Camera distortion paremeters (OpenCV) -------------
 # Camera.k1: -1.1099991241652431e-01
@@ -71,6 +83,7 @@ Camera.cy: 2.3880511516801573e+02
 # Camera.p2: -3.922424e-04
 # Camera.k3: -5.382460e-02
 
+# #for TUM dataset
 # Camera.k1: 0.026370
 # Camera.k2: -0.100086
 # Camera.p1: 0.003138
@@ -90,12 +103,26 @@ Camera.cy: 2.3880511516801573e+02
 # Camera.p2: 0
 # Camera.k3: 0
 
-# PS3 new camera
-Camera.k1: -1.4767522315218481e-01
-Camera.k2: 1.1413021211546952e-01
-Camera.p1: 4.6221763207419195e-03
-Camera.p2: 3.6755315734154806e-03
-Camera.k3: -4.5531038154248867e-02
+# # ps3 new camera
+# Camera.k1: -1.4767522315218481e-01
+# Camera.k2: 1.1413021211546952e-01
+# Camera.p1: 4.6221763207419195e-03
+# Camera.p2: 3.6755315734154806e-03
+# Camera.k3: -4.5531038154248867e-02
+
+# # lifeCam new camera
+# Camera.k1:  0.01066
+# Camera.k2: -0.15285
+# Camera.p1:  0.00624
+# Camera.p2: -0.00138
+# Camera.k3:  0.11753
+
+# TUM fr2 dataset
+Camera.k1:  0.231222
+Camera.k2: -0.784899
+Camera.p1: -0.003257
+Camera.p2: -0.000105
+Camera.k3:  0.917205
 
 # Camera frames per second 
 Camera.fps: 30.0
